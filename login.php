@@ -15,10 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = mysqli_fetch_assoc($result);
         // Pārbauda, vai parole ir pareiza
         if (password_verify($password, $user["password"])) {
-            $_SESSION["username"] = $user["username"]; // Saglabā lietotājvārdu sesijā
+            $_SESSION["username"] = $user["username"];
+            $_SESSION["role"] = $user["role"];
 
-            // Pāradresē lietotāju uz profila lapu
-            header("Location: profile.php");
+            //Ja admin tad pāsūtīs uz movies.php
+            if ($user["role"] === "admin") {
+                header("Location: movies_add/add.php");
+            } else {
+                header ("Location: login/profile.php");
+            }
             exit();
         } else {
             // Ja parole ir nepareiza
@@ -72,6 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Pieteikties</title>
 </head>
 <body>
+
+<div class="topnav">
+  <a href="index.php">Sākums</a>
+  <a class="active" href="login.php">Ielogoties</a>
+  <a href="register.php">Reģistrēties</a>
+  <a href="profile.php">profils</a>
+</div>
 
 <div class="container">
     <h2>Pieteikties</h2>

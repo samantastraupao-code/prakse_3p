@@ -24,9 +24,16 @@ $user = $result->fetch_assoc();
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Profils</title>
- 
 </head>
+
 <body>
+
+<div class="topnav">
+  <a href="index.php">Sākums</a>
+  <a href="login.php">Ielogoties</a>
+  <a href="register.php">Reģistrēties</a>
+  <a class= "active" "profile.php">profils</a>
+</div>
 
   <main class="profile-container">
     <section class="user-info">

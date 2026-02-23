@@ -12,6 +12,13 @@ session_start();
 
 <h1>Welcome to Ratemovie 🎬</h1>
 
+<div class="topnav">
+  <a class="active" href="index.php">Sākums</a>
+  <a href="login.php">Ielogoties</a>
+  <a href="register.php">Reģistrēties</a>
+  <a href="profile.php">profils</a>
+</div>
+
 <?php if (isset($_SESSION["username"])): ?>
     <p>Hello, <?= htmlspecialchars($_SESSION["username"]) ?>!</p>
     <a href="profile.php">Go to Profile</a><br>

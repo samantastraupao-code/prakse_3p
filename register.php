@@ -103,8 +103,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
 
 <div class="container">
     <h2>Reģistrēties</h2> 
+
+    <div class="topnav">
+        <a href="index.php">Sākums</a>
+        <a href="login.php">Ielogoties</a>
+        <a class="active" href="register.php">Reģistrēties</a>
+        <a href="profile.php">profils</a>
+    </div>
     
-    <form method="post" action="profile.php" novalidate>
+    <form method="post" action="" novalidate>
         <input type="text" name="username" placeholder="Lietotājvārds" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required>
         
         <input type="email" name="email" placeholder="E-pasts" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
