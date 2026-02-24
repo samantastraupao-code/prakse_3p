@@ -1,5 +1,5 @@
 <?php
-require_once("connection.php"); // nav liekās atstarpes un nav admin/ priekšā
+require_once("../connection.php"); // connection.php is one level up
 
 if(isset($_GET['Del'])) {
     $movie_id = $_GET['Del'];
@@ -9,7 +9,8 @@ if(isset($_GET['Del'])) {
     $result = mysqli_query($con, $query);
 
     if($result) {
-        header("Location: movie.php"); // atgriež uz movie.php
+        // Absolute path redirection
+        header("Location: movie.php");
         exit;
     } else {
         echo "Please Check Your Query: " . mysqli_error($con);

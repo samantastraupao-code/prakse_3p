@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             //Ja admin tad pāsūtīs uz movies.php
             if ($user["role"] === "admin") {
-                header("Location: admin/movie.php");
+                header("Location: admin/movie/movie.php");
             } else {
                 header ("Location: profile.php");
             }
