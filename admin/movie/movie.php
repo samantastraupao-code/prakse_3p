@@ -55,6 +55,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <li class="nav-item"><a class="nav-link active" href="movie.php">Movies</a></li>
             <li class="nav-item"><a class="nav-link" href="../actors/actors.php">Actors</a></li>
             <li class="nav-item"><a class="nav-link" href="../genre/genre.php">Genres</a></li>
+            <li class="nav-item"><a class="nav-link" href="../users/users.php">Users</a></li>
         </ul>
         <a href="../../logout.php" class="btn btn-secondary">Logout</a>
     </div>

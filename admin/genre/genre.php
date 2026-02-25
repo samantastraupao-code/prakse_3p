@@ -17,17 +17,17 @@ $result = mysqli_query($con, $query);
 <body class="bg-dark text-light">
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Admin Panel</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+    <a class="navbar-brand" href="../dashboard.php">Admin Panel</a>
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="../movie/movie.php">Movie</a></li>
-        <li class="nav-item"><a class="nav-link" href="../actors/actors.php">Actors</a></li>
-        <li class="nav-item"><a class="nav-link active" href="genre.php">Genre</a></li>
-      </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link " href="../movie/movie.php">Movies</a></li>
+            <li class="nav-item"><a class="nav-link" href="../actors/actors.php">Actors</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../genre/genre.php">Genres</a></li>
+            <li class="nav-item"><a class="nav-link" href="../users/users.php">Users</a></li>
+        </ul>
+        <a href="../../logout.php" class="btn btn-secondary">Logout</a>
     </div>
-  </div>
 </nav>
 
 <div class="container mt-5">

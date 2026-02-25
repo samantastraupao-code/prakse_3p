@@ -24,6 +24,7 @@ $result = mysqli_query($con, $query);
             <li class="nav-item"><a class="nav-link" href="../movie/movie.php">Movies</a></li>
             <li class="nav-item"><a class="nav-link active" href="actors.php">Actors</a></li>
             <li class="nav-item"><a class="nav-link" href="../genre/genre.php">Genres</a></li>
+            <li class="nav-item"><a class="nav-link" href="../users/users.php">Users</a></li>
         </ul>
         <a href="../../logout.php" class="btn btn-secondary">Logout</a>
     </div>
