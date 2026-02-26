@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
         session_start(); // Sāk sesiju
         $_SESSION["username"] = $username; // Saglabā lietotājvārdu sesijā
         $_SESSION["email"] = $email; // Saglabā e-pastu sesijā
-        header("Location: profile.php"); // Pāradresē uz profila lapu
+        header("Location: index.php"); // Pāradresē uz profila lapu
         exit(); // Beidz izpildi
     }
 }
@@ -108,7 +108,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
         <a href="index.php">Sākums</a>
         <a href="login.php">Ielogoties</a>
         <a class="active" href="register.php">Reģistrēties</a>
-        <a href="profile.php">profils</a>
     </div>
     
     <form method="post" action="" novalidate>

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user["role"] === "admin") {
                 header("Location: admin/movie/movie.php");
             } else {
-                header ("Location: profile.php");
+                header ("Location: index.php");
             }
             exit();
         } else {
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user["password"])) {
             $_SESSION["username"] = $user["username"]; // Saglabā lietotājvārdu sesijā
             // Pāradresē lietotāju uz profila lapu
-            header("Location: profile.php");
+            header("Location: index.php");
             exit(); // Beidz izpildi
         } else {
             // Ja parole ir nepareiza
@@ -82,7 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <a href="index.php">Sākums</a>
   <a class="active" href="login.php">Ielogoties</a>
   <a href="register.php">Reģistrēties</a>
-  <a href="profile.php">profils</a>
 </div>
 
 <div class="container">

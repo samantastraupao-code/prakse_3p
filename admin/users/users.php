@@ -80,14 +80,13 @@
                                   </a>
                                   </td>
 
-                                  <td>
-                    <a href="delete_movie.php?Del=<?php echo $id; ?>" 
-                       class="btn btn-danger btn-sm" 
-                       onclick="return confirm('Vai tiešām dzēst šo lietotāju?')">
-                       Delete
-                    </a>
-                    
-                </td>
+                                 <td>
+<a href="delete_user.php?Del=<?php echo $user_id; ?>" 
+   class="btn btn-danger btn-sm" 
+   onclick="return confirm('Vai tiešām dzēst šo lietotāju?')">
+   Delete
+</a>
+</td>
                                </tr>        
                             <?php 
                                     }  
