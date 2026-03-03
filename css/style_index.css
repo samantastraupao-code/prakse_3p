@@ -1,0 +1,177 @@
+
+body { 
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  font-size: large;
+  background-color: #181C14; /* dark background */
+  color: #ECDFCC; /* light text */
+  margin: 0;
+}
+
+a {
+  color: #ECDFCC;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* topnav sadaļa */
+.topnav {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.topnav a {
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.second_nav {
+  display: flex;          
+  justify-content: center; 
+  gap: 15px;               
+  align-items: center;     
+}  
+
+/* 3 filmas vienā rindā */
+.movies_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* filmas kastītes noformējums */
+.movie_box { 
+  border: 1px solid #697565; 
+  background-color: #3C3D37;
+  padding: 15px; 
+  display: grid;
+  grid-template-areas: 
+    "image image"
+    "title average_r"
+    "genre year"
+    "duration actor"
+    "description description"
+    "button button"
+    "reviews reviews"
+    "form form";
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.image { 
+  grid-area: image; 
+  width: 150px;
+  justify-self: center;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #000;
+}
+
+/* Filmas informācija*/
+.title { 
+  grid-area: title; 
+  font-weight: bold; 
+  font-size: 1.2rem; 
+}
+
+.average_r { 
+  grid-area: average_r; 
+  font-weight: bold; 
+}
+
+.genre { grid-area: genre; }
+
+.year { grid-area: year; }
+
+.duration { grid-area: duration; }
+
+.actor { grid-area: actor; }
+
+.description { 
+  grid-area: description; 
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+/* Atsausmju poga */
+.toggle-reviews {
+  grid-area: button;
+  padding: 8px 12px;
+  cursor: pointer;
+  align-self: start;
+  background-color: #697565;
+  color: #ECDFCC;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.toggle-reviews:hover {
+  background-color: #5a5f50;
+}
+
+/* Atsauksmju konteineris */
+.reviews-container {
+  grid-area: reviews;
+  padding: 10px;
+  border: 2px solid #697565;
+  border-radius: 5px;
+  background-color: #2F3028;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.review {
+  grid-area: form;
+  padding: 10px;
+  border: 2px solid #697565;
+  border-radius: 5px;
+  background-color: #2F3028;
+}
+
+.review-guest {
+  color: red;
+  font-weight: bold;
+  padding: 5px;
+}
+
+/* Zvaigžņu vērtēšanas sistēma */
+.star {
+  color: goldenrod;
+  font-size: 2rem;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+.star::before { content:'\2606'; }
+.star.rated::before { content:'\2605'; }
+
+.rating-text { 
+  margin-left: 10px; 
+  font-weight: bold; 
+}
+
+.logout_btn{
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.logout_btn button {
+  background-color: gray;
+  color: #ECDFCC;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout_btn button:hover {
+  background-color: #5a5a5a;
+}
+
+

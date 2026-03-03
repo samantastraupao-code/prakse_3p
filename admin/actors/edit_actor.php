@@ -1,29 +1,28 @@
 <?php
 require_once("../connection.php");
 
-// ---------- HANDLE FORM SUBMISSION ----------
 if(isset($_POST['edit'])) {
-    $actor_id = $_GET['GetID']; // matches the form action
+    $actor_id = $_GET['GetID'];
 
     $first_name = $_POST['name'];
     $last_name = $_POST['last_name'];
     $birth_date = $_POST['birth_date'];
 
-    // Get current photo from DB
+    // Tagadējais attēls no datubāzes
     $check = "SELECT photo FROM actors WHERE actor_id='$actor_id'";
     $result = mysqli_query($con, $check);
     $row = mysqli_fetch_assoc($result);
     $old_photo = $row['photo'];
 
-    // Check if new image uploaded
+    // Pārbauda via jauns attēls ir ievietots
     if($_FILES['photo']['name'] != "") {
         $photo_name = $_FILES['photo']['name'];
         $temp_name = $_FILES['photo']['tmp_name'];
 
-        // Move new image
+        // Pārvieto jauno attēlu
         move_uploaded_file($temp_name, "../../uploads/".$photo_name);
 
-        // Optional: delete old image
+        // Optional: Dzēš veco attēlu
         if(file_exists("../../uploads/".$old_photo)) {
             unlink("../../uploads/".$old_photo);
         }
@@ -35,7 +34,7 @@ if(isset($_POST['edit'])) {
                     photo='$photo_name'
                   WHERE actor_id='$actor_id'";
     } else {
-        // Update without changing photo
+        // Atjauno aktiera datus nemainot attēlu
         $query = "UPDATE actors SET 
                     first_name='$first_name', 
                     last_name='$last_name', 
@@ -44,11 +43,11 @@ if(isset($_POST['edit'])) {
     }
 
     mysqli_query($con, $query);
-    header("Location: actors.php"); // redirect after update
+    header("Location: actors.php");
     exit();
 }
 
-// ---------- LOAD ACTOR FOR FORM ----------
+
 if(!isset($_GET['GetID'])) {
     echo "No actor selected!";
     exit();
@@ -91,33 +90,32 @@ $photo      = $row['photo'];
                 </div>
                 <div class="card-body">
 
-                    <!-- FORM -->
                     <form action="edit_actor.php?GetID=<?php echo $actor_id ?>" 
                           method="post" 
                           enctype="multipart/form-data">
 
-                        <!-- First Name -->
+                        <!-- Vārds -->
                         <input type="text" 
                                class="form-control mb-2" 
                                name="name" 
                                value="<?php echo $first_name ?>" 
                                required>
 
-                        <!-- Last Name -->
+                        <!-- Uzvārds -->
                         <input type="text" 
                                class="form-control mb-2" 
                                name="last_name" 
                                value="<?php echo $last_name ?>" 
                                required>
 
-                        <!-- Birth Date -->
+                        <!-- Dzimšanas dati -->
                         <input type="date" 
                                class="form-control mb-2" 
                                name="birth_date" 
                                value="<?php echo $birth_date ?>" 
                                required>
 
-                        <!-- Current Photo -->
+                        <!-- Tagadējais attēls -->
                         <div class="mb-2">
                             <label>Current Photo:</label><br>
                             <?php if(!empty($photo) && file_exists("../../uploads/".$photo)) { ?>
@@ -127,12 +125,11 @@ $photo      = $row['photo'];
                             <?php } ?>
                         </div>
 
-                        <!-- Upload New Photo -->
+                        <!-- Ielādē jauno attēlu -->
                         <input type="file" 
                                class="form-control mb-3" 
                                name="photo">
 
-                        <!-- Submit Button -->
                         <button class="btn btn-primary" name="edit">
                             Update Actor
                         </button>

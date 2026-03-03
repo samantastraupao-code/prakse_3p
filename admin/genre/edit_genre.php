@@ -1,7 +1,6 @@
 <?php
 require_once("../connection.php");
 
-// ---------- HANDLE FORM SUBMISSION ----------
 if(isset($_POST['edit'])) {
     if(!isset($_GET['genre_id'])) {
         echo "No genre selected!";
@@ -26,7 +25,6 @@ if(isset($_POST['edit'])) {
     }
 }
 
-// ---------- LOAD GENRE DATA ----------
 if(!isset($_GET['genre_id'])) {
     echo "No genre selected!";
     exit();
@@ -65,7 +63,7 @@ $genre_name = $row['name'];
                 <div class="card-body">
 
                     <form action="edit_genre.php?genre_id=<?php echo $genre_id ?>" method="post">
-                        <!-- Genre Name -->
+                        <!-- Žanra nosaukums -->
                         <input type="text" 
                                class="form-control mb-2" 
                                placeholder="Genre Name" 
@@ -73,7 +71,6 @@ $genre_name = $row['name'];
                                value="<?php echo htmlspecialchars($genre_name); ?>" 
                                required>
 
-                        <!-- Submit Button -->
                         <button class="btn btn-primary w-100" name="edit">Update Genre</button>
                     </form>
 

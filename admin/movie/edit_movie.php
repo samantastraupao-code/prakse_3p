@@ -7,17 +7,17 @@ if(!isset($_GET['GetID'])){
 
 $movie_id = $_GET['GetID'];
 
-// Fetch movie
+
 $movie_query = "SELECT * FROM movies WHERE movie_id='$movie_id'";
 $movie_res = mysqli_query($con, $movie_query);
 $movie = mysqli_fetch_assoc($movie_res);
 if(!$movie) die("Movie not found!");
 
-// Fetch genres and actors
+
 $genre_result = mysqli_query($con, "SELECT * FROM genres");
 $actor_result = mysqli_query($con, "SELECT * FROM actors");
 
-// Fetch current actors for this movie
+// Savāc aktierus noteiktajai filmai
 $selected_actors = [];
 $actor_query = "SELECT actor_id FROM movie_actors WHERE movie_id='$movie_id'";
 $actor_res = mysqli_query($con, $actor_query);
@@ -25,7 +25,7 @@ while($row = mysqli_fetch_assoc($actor_res)){
     $selected_actors[] = $row['actor_id'];
 }
 
-// Handle form submission
+
 if(isset($_POST['edit'])){
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -34,17 +34,17 @@ if(isset($_POST['edit'])){
     $genre_id = $_POST['genre_id'];
     $actors = $_POST['actors'] ?? [];
 
-    // Handle image upload
-    $image_name = $movie['image']; // keep old if not uploaded
+
+    $image_name = $movie['image']; // Patur veco attēlu, ja nemaina to
     if(!empty($_FILES['image']['name'])){
         $image_name = $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], "../../uploads/".$image_name);
         if(file_exists("../../uploads/".$movie['image'])){
-            unlink("../../uploads/".$movie['image']); // delete old image
+            unlink("../../uploads/".$movie['image']); // Dzēš veco attēlu
         }
     }
 
-    // Update movie
+    // Rediģēt filmu
     $update_query = "UPDATE movies SET 
                         title='$title',
                         description='$description',
@@ -55,7 +55,7 @@ if(isset($_POST['edit'])){
                      WHERE movie_id='$movie_id'";
     mysqli_query($con, $update_query);
 
-    // Update movie_actors table
+    // Uatjauno movie_actors tabulu datubāzē
     mysqli_query($con, "DELETE FROM movie_actors WHERE movie_id='$movie_id'");
     foreach($actors as $actor_id){
         mysqli_query($con, "INSERT INTO movie_actors (movie_id, actor_id) VALUES ('$movie_id', '$actor_id')");
@@ -83,19 +83,19 @@ if(isset($_POST['edit'])){
                 <div class="card-body">
                     <form action="edit_movie.php?GetID=<?php echo $movie_id ?>" method="post" enctype="multipart/form-data">
 
-                        <!-- Title -->
+                        <!-- Nosaukums -->
                         <input type="text" class="form-control mb-2" name="title" value="<?php echo htmlspecialchars($movie['title']); ?>" required>
 
-                        <!-- Description -->
+                        <!-- Apraksts -->
                         <textarea class="form-control mb-2" name="description" required><?php echo htmlspecialchars($movie['description']); ?></textarea>
 
-                        <!-- Release Year -->
+                        <!-- Izlaišanas gads -->
                         <input type="number" class="form-control mb-2" name="release_year" value="<?php echo $movie['release_year']; ?>" min="1800" max="2100" required>
 
-                        <!-- Duration -->
+                        <!-- Garums -->
                         <input type="number" class="form-control mb-2" name="duration" value="<?php echo $movie['duration']; ?>" min="1" required>
 
-                        <!-- Genre -->
+                        <!-- Žanrs -->
                         <select name="genre_id" class="form-control mb-2" required>
                             <option value="">-- Select Genre --</option>
                             <?php
@@ -107,7 +107,7 @@ if(isset($_POST['edit'])){
                             <?php endwhile; ?>
                         </select>
 
-                        <!-- Actors -->
+                        <!-- Aktieri -->
                         <div class="border p-2 mb-2" style="max-height:200px; overflow-y:auto;">
                         <?php
                         mysqli_data_seek($actor_result, 0);
@@ -120,7 +120,7 @@ if(isset($_POST['edit'])){
                         <?php endwhile; ?>
                         </div>
 
-                        <!-- Current Image -->
+                        <!-- Tagadējais attēls -->
                         <div class="mb-2">
                             <label>Current Image:</label><br>
                             <?php if(!empty($movie['image']) && file_exists("../../uploads/".$movie['image'])): ?>
@@ -130,7 +130,7 @@ if(isset($_POST['edit'])){
                             <?php endif; ?>
                         </div>
 
-                        <!-- Upload New Image -->
+                        <!-- Ievietot jaunu attēlu -->
                         <input type="file" class="form-control mb-2" name="image">
 
                         <button class="btn btn-primary w-100" name="edit">Update Movie</button>

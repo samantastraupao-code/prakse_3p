@@ -1,7 +1,7 @@
 <?php 
 require_once("../connection.php");
 
-// ---------- UPDATE USER ----------
+// Atjaunina lietotājus
 if(isset($_POST['update'])) {
 
     if(!isset($_GET['user_id'])) {
@@ -15,7 +15,7 @@ if(isset($_POST['update'])) {
     $role = mysqli_real_escape_string($con, $_POST['role']);
     $new_password = $_POST['password'];
 
-    // If password field is NOT empty → hash new password
+    // Ja nomaina paroli, tad viņu hasho
     if(!empty($new_password)) {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
@@ -26,7 +26,7 @@ if(isset($_POST['update'])) {
                        role='$role'
                    WHERE user_id='$user_id'";
     } else {
-        // If password empty → don't change it
+        // Ja paroles lauks ir nemainīts tad to tā atstāj
         $update = "UPDATE users 
                    SET username='$username',
                        email='$email',
@@ -43,7 +43,7 @@ if(isset($_POST['update'])) {
     }
 }
 
-// ---------- LOAD USER ----------
+// Savāc lietotāja datus
 if(!isset($_GET['user_id'])) {
     echo "No user selected!";
     exit();
@@ -83,27 +83,27 @@ $role = $row['role'];
 
 <form action="edit_users.php?user_id=<?php echo $user_id ?>" method="post">
 
-<!-- Username -->
+<!-- Lietotājvārds -->
 <input type="text"
        class="form-control mb-2"
        name="username"
        value="<?php echo htmlspecialchars($username); ?>"
        required>
 
-<!-- Email -->
+<!-- E-pasts -->
 <input type="email"
        class="form-control mb-2"
        name="email"
        value="<?php echo htmlspecialchars($email); ?>"
        required>
 
-<!-- Password (optional) -->
+<!-- Parole  -->
 <input type="password"
        class="form-control mb-2"
        name="password"
        placeholder="Leave empty to keep current password">
 
-<!-- Role -->
+<!-- Loma -->
 <select class="form-control mb-3" name="role" required>
     <option value="user" <?php if($role=='user') echo 'selected'; ?>>User</option>
     <option value="admin" <?php if($role=='admin') echo 'selected'; ?>>Admin</option>

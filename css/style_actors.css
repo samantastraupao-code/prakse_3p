@@ -1,0 +1,115 @@
+body { 
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  font-size: large;
+  background-color: #181C14; 
+  color: #ECDFCC; 
+  margin: 0;
+}
+
+a {
+  color: #ECDFCC;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.top a {
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.second_nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.actors_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.actor_box { 
+  border: 1px solid #697565; 
+  background-color: #3C3D37;
+  padding: 15px; 
+  display: grid;
+  grid-template-areas:
+    "image"
+    "actor_full_name"
+    "birth_date"
+    "movie_button"
+    "movies";
+  gap: 10px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 8px #000;
+}
+
+.image {
+  grid-area: image;
+  display: flex;
+  justify-content: center;
+}
+
+.image img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 0 5px #000;
+}
+
+
+.actor_full_name {
+  grid-area: actor_full_name;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.birth_date {
+  grid-area: birth_date;
+  font-size: 0.95em;
+  opacity: 0.9;
+}
+
+.movie_button {
+  grid-area: movie_button;
+}
+
+.movie_button button {
+  padding: 8px 12px;
+  background-color: #697565;
+  color: #ECDFCC;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.movie_button button:hover {
+  background-color: #88957a;
+}
+
+/* Filmas kurās ir startējuši aktieri */
+
+.movies {
+  grid-area: movies;
+  font-size: 0.9em;
+  background-color: #2b2c28;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+}

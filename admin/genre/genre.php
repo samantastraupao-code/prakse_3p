@@ -1,7 +1,6 @@
 <?php 
 require_once("../connection.php");
 
-// Fetch all genres
 $query = "SELECT * FROM genres";
 $result = mysqli_query($con, $query);
 ?>
@@ -16,7 +15,7 @@ $result = mysqli_query($con, $query);
 </head>
 <body class="bg-dark text-light">
 
-<!-- Navigation -->
+<!-- Navigācija -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
     <a class="navbar-brand" href="../dashboard.php">Admin Panel</a>
     <div class="collapse navbar-collapse">
@@ -34,7 +33,7 @@ $result = mysqli_query($con, $query);
 <div class="container mt-5">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Žanri</h1>
+        <h1>Genre</h1>
         <a href="add_genre.php" class="btn btn-success">Add New Genre</a>
     </div>
 
@@ -42,7 +41,7 @@ $result = mysqli_query($con, $query);
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nosaukums</th>
+                <th>Name</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -56,7 +55,7 @@ $result = mysqli_query($con, $query);
                     <a href="edit_genre.php?genre_id=<?php echo $row['genre_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
                 </td>
                 <td>
-                    <a href="delete_genre.php?Del=<?php echo $row['genre_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Vai tiešām dzēst šo žanru?')">Delete</a>
+                    <a href="delete_genre.php?Del=<?php echo $row['genre_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you really want to delete this genre?')">Delete</a>
                 </td>
             </tr>
             <?php endwhile; ?>

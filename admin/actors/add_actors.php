@@ -1,39 +1,43 @@
 <?php
 require_once("../connection.php");
 
-// Handle form submission
 if(isset($_POST['submit'])) {
 
-    // Check required fields
-    if(empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['birth_date']) || empty($_FILES['photo']['name'])) {
-        $error = "Please fill in all the fields and select a photo.";
+    if(empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['birth_date'])) {
+        $error = "Please fill in required fields.";
     } else {
+
         $first_name = $_POST['first_name'];
         $last_name  = $_POST['last_name'];
         $birth_date = $_POST['birth_date'];
 
-        // Handle photo upload
-        $photo_name = $_FILES['photo']['name'];
-        $photo_tmp  = $_FILES['photo']['tmp_name'];
+        $photo_name = NULL;
 
-        // Move the uploaded file to uploads folder
-        $upload_dir = "../uploads/";
-        if(!is_dir($upload_dir)){
-            mkdir($upload_dir, 0755, true); // create uploads folder if it doesn't exist
+        if(isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+
+            $photo_name = $_FILES['photo']['name'];
+            $photo_tmp  = $_FILES['photo']['tmp_name'];
+
+            $upload_dir = "../uploads/";
+
+    
         }
 
-        move_uploaded_file($photo_tmp, $upload_dir.$photo_name);
-
         // Insert into database
-        $query = "INSERT INTO actors (first_name, last_name, birth_date, photo, created_at) 
-                  VALUES ('$first_name', '$last_name', '$birth_date', '$photo_name', NOW())";
-        $result = mysqli_query($con, $query);
+        if(!isset($error)) {
 
-        if($result){
-            header("Location: actors.php");
-            exit();
-        } else {
-            $error = "Database error: please check your query.";
+            $query = "INSERT INTO actors (first_name, last_name, birth_date, photo, created_at) 
+                      VALUES ('$first_name', '$last_name', '$birth_date', " .
+                      ($photo_name ? "'$photo_name'" : "NULL") . ", NOW())";
+
+            $result = mysqli_query($con, $query);
+
+            if($result){
+                header("Location: actors.php");
+                exit();
+            } else {
+                $error = "Database error.";
+            }
         }
     }
 }
@@ -80,15 +84,19 @@ if(isset($_POST['submit'])) {
                         </div>
 
                         <div class="mb-3">
-                            <label>Photo</label>
-                            <input type="file" name="photo" class="form-control" accept="image/*" required>
+                            <label>Photo (optional)</label>
+                            <input type="file" name="photo" class="form-control" accept="image/*">
                         </div>
 
-                        <button type="submit" name="submit" class="btn btn-success w-100">Add Actor</button>
+                        <button type="submit" name="submit" class="btn btn-success w-100">
+                            Add Actor
+                        </button>
 
                     </form>
 
-                    <a href="actors.php" class="btn btn-secondary mt-3 w-100">Back to Actors List</a>
+                    <a href="actors.php" class="btn btn-secondary mt-3 w-100">
+                        Back to Actors List
+                    </a>
 
                 </div>
             </div>

@@ -1,7 +1,5 @@
 <?php
-require_once("../connection.php"); // connection.php is one level up
-
-// Fetch all actors
+require_once("../connection.php");
 $query = "SELECT * FROM actors";
 $result = mysqli_query($con, $query);
 ?>
@@ -16,7 +14,7 @@ $result = mysqli_query($con, $query);
 </head>
 <body class="bg-dark text-light">
 
-<!-- Navigation -->
+<!-- Navigācija -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
     <a class="navbar-brand" href="../dashboard.php">Admin Panel</a>
     <div class="collapse navbar-collapse">

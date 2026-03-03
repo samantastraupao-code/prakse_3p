@@ -1,7 +1,6 @@
 <?php
 require_once("../connection.php");
 
-// Handle form submission
 if(isset($_POST['submit'])){
     if(empty($_POST['name'])){
         $error = "Please enter a genre name.";

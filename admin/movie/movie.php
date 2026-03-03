@@ -1,7 +1,7 @@
 <?php
-require_once("../connection.php"); // movie.php is in admin/movie/, so connection.php is one level up
+require_once("../connection.php"); 
 
-// Get all movies with their actors and genre
+// Visi filmas un aktieru dati, savieno vienā tabulā
 $query = "
 SELECT 
     m.movie_id, m.title, m.description, m.release_year, m.duration, m.image,
@@ -15,7 +15,7 @@ ORDER BY m.movie_id
 ";
 $result = mysqli_query($con, $query);
 
-// Group actors by movie in PHP
+// Sagrupē aktierus un filmas
 $movies = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $id = $row['movie_id'];
@@ -44,10 +44,27 @@ while ($row = mysqli_fetch_assoc($result)) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Filmu saraksts</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    
+    .description-cell {
+        max-width: 500px;
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    .movie-image {
+        width: 120px;
+        height: auto;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+</style>
 </head>
 <body class="bg-dark text-light">
 
-<!-- Navigation -->
+<!-- Navigācija -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
     <a class="navbar-brand" href="../dashboard.php">Admin Panel</a>
     <div class="collapse navbar-collapse">
@@ -56,7 +73,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <li class="nav-item"><a class="nav-link" href="../actors/actors.php">Actors</a></li>
             <li class="nav-item"><a class="nav-link" href="../genre/genre.php">Genres</a></li>
             <li class="nav-item"><a class="nav-link" href="../users/users.php">Users</a></li>
-            <li class="nav-item" > <a class="nav-link" href="../review/review.php"> Review </a> </li>
+            <li class="nav-item"><a class="nav-link" href="../review/review.php">Review</a></li>
         </ul>
         <a href="../../logout.php" class="btn btn-secondary">Logout</a>
     </div>
@@ -64,68 +81,73 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between mb-3">
-        <h1>Filmu saraksts</h1>
-        <a href="add_movie.php" class="btn btn-success">Pievieno jaunu filmu</a>
+        <h1> Movie list </h1>
+        <a href="add_movie.php" class="btn btn-success"> Add a new movie </a>
     </div>
 
-    <table class="table table-bordered table-dark text-light align-middle">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Attēls</th>
-                <th>Nosaukums</th>
-                <th>Apraksts</th>
-                <th>Gads</th>
-                <th>Garums</th>
-                <th>Žanrs</th>
-                <th>Aktieri</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($movies as $id => $movie): ?>
-            <tr>
- 
-                <td><?php echo $id; ?></td>
+    <div class="table-responsive">
+        <table class="table table-bordered table-dark text-light align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Year</th>
+                    <th>Duration</th>
+                    <th>Genre</th>
+                    <th>Actors</th>
 
-                               <td>
-                    <?php if(!empty($movie['image']) && file_exists("../../uploads/".$movie['image'])): ?>
-                        <img src="../../uploads/<?php echo htmlspecialchars($movie['image']); ?>" width="120" alt="Movie Image">
-                    <?php else: ?>
-                        No Image
-                    <?php endif; ?>
-                </td>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($movies as $id => $movie): ?>
+                <tr>
+                    <td><?php echo $id; ?></td>
 
-                <td><?php echo htmlspecialchars($movie['title']); ?></td>
-                <td><?php echo htmlspecialchars($movie['description']); ?></td>
-                <td><?php echo $movie['release_year']; ?></td>
-                <td><?php echo $movie['duration']; ?></td>
-                <td><?php echo htmlspecialchars($movie['genre']); ?></td>
+                    <td>
+                        <?php if(!empty($movie['image']) && file_exists("../../uploads/".$movie['image'])): ?>
+                            <img src="../../uploads/<?php echo htmlspecialchars($movie['image']); ?>" 
+                                 alt="Movie Image" class="movie-image">
+                        <?php else: ?>
+                            No Image
+                        <?php endif; ?>
+                    </td>
 
-                <td>
-                    <?php 
-                        if (!empty($movie['actors'])) {
-                            echo implode(', ', $movie['actors']);
-                        } else {
-                            echo 'Nav aktieru';
-                        }
-                    ?>
-                </td>
-                <td>
-                    <a href="edit_movie.php?GetID=<?php echo $id; ?>" class="btn btn-warning btn-sm">Edit</a>
-                </td>
-                <td>
-                    <a href="delete_movie.php?Del=<?php echo $id; ?>" 
-                       class="btn btn-danger btn-sm" 
-                       onclick="return confirm('Vai tiešām dzēst šo filmu?')">
-                       Delete
-                    </a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+                    <td><?php echo htmlspecialchars($movie['title']); ?></td>
+
+                    <td class="description-cell"><?php echo htmlspecialchars($movie['description']); ?></td>
+
+                    <td><?php echo $movie['release_year']; ?></td>
+                    <td><?php echo $movie['duration']; ?></td>
+                    <td><?php echo htmlspecialchars($movie['genre']); ?></td>
+
+                    <td>
+                        <?php 
+                            if (!empty($movie['actors'])) {
+                                echo implode(', ', $movie['actors']);
+                            } else {
+                                echo 'No actors';
+                            }
+                        ?>
+                    </td>
+                    <td>
+                        <a href="edit_movie.php?GetID=<?php echo $id; ?>" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                    <td>
+                        <a href="delete_movie.php?Del=<?php echo $id; ?>" 
+                           class="btn btn-danger btn-sm" 
+                           onclick="return confirm('Do you really want to delete this movie?')">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>
