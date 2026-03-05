@@ -27,75 +27,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             // Ja parole ir nepareiza
-            $error = "Nepareiza parole.";
+            $error = "Wrong password.";
         }
     } else {
         // Ja lietotājs nav atrasts datubāzē
-        $error = "Lietotājs nav atrasts.";
+        $error = "User not found.";
     }
 }
 ?>
-<?php
 
-include 'includes/CONFIG.php';
-
-// Pārbauda, vai pieprasījums ir POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Iegūst lietotājvārdu un paroli no POST datiem
-    $username = mysqli_real_escape_string($con, $_POST["username"]); //Aizsargā lietotājvārdu pret SQL
-    $password = $_POST["password"]; //Iegūst paroli
-
-    // Pārbauda, vai lietotājs eksistē datubāzē
-    $sql = "SELECT * FROM users WHERE username='$username'";
-    $result = mysqli_query($con, $sql); // Izpilda SQL vaicājumu
-
-    // Pārliecinās, ka atrasts tikai viens lietotājs ar šo lietotājvārdu
-    if ($result && mysqli_num_rows($result) === 1) {
-        $user = mysqli_fetch_assoc($result); //Iegūst lietotāja datus
-        // Pārbauda, vai parole ir pareiza
-        if (password_verify($password, $user["password"])) {
-            $_SESSION["username"] = $user["username"]; // Saglabā lietotājvārdu sesijā
-            // Pāradresē lietotāju uz profila lapu
-            header("Location: index.php");
-            exit(); // Beidz izpildi
-        } else {
-            // Ja parole ir nepareiza
-            $error = "Nepareiza parole.";
-        }
-    } else {
-        // Ja lietotājs nav atrasts datubāzē
-        $error = "Lietotājs nav atrasts.";
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pieteikties</title>
+  <title>Login</title>
+  <link rel="stylesheet" href="css/style_login.css">
 </head>
 <body>
 
-<div class="topnav">
-  <a href="index.php">Sākums</a>
-  <a class="active" href="login.php">Ielogoties</a>
-  <a href="register.php">Reģistrēties</a>
-</div>
-
 <div class="container">
-    <h2>Pieteikties</h2>
+    <h2>Log in</h2>
+
+    <div class="topnav">
+        <a href="index.php">Home</a>
+        <a class="active" href="login.php">Login</a>
+        <a href="register.php">Register</a>
+    </div> 
+
     <?php if (isset($error)): // Pārbauda kļūdas ?>
         <div class="error">
             <p><?= htmlspecialchars($error) ?></p> 
         </div>
     <?php endif; ?>
+    
     <form method="post" action="login.php" novalidate> <!-- Formas nosūtīšana uz login.php -->
-        <input type="text" name="username" placeholder="Lietotājvārds" required>
-        <input type="password" name="password" placeholder="Parole" required>
-        <input type="submit" value="Pieteikties"> 
-        <a href="index.php" class="button_link">Atpakaļ</a>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" value="Login"> 
+        <a href="index.php" class="button_link">Back</a>
     </form>
 </div>
 

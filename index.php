@@ -151,7 +151,7 @@ while($row = mysqli_fetch_assoc($result)) {
 
             <div class="average_r">
                 <strong>Average Rating:</strong> 
-                <?php echo $avg_rating; ?> / 5 (<?php echo $review_count; ?> reviews)
+                <?php echo $avg_rating; ?> / 5 <br> (<?php echo $review_count; ?> reviews)
             </div>
 
             <div class="genre">

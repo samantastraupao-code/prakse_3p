@@ -20,25 +20,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
 
     // Validē lietotājvārdu
     if (empty($username)) {
-        $errors[] = "Lietotājvārds ir nepieciešams un nevar būt tukšs.";
+        $errors[] = "Username is required and cannot be empty.";
     } elseif (strlen($username) < 3) {
-        $errors[] = "Lietotājvārdam ir jābūt vismaz 3 simboliem garam!";
+        $errors[] = "Username must be at least 3 characters long.";
     }
 
     // Validē e-pastu
     if (empty($email)) {
-        $errors[] = "E-mail ir nepieciešams un nevar būt tukšs.";
+        $errors[] = "Email is required and cannot be empty.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Nepareizs e-mail formāts.";
+        $errors[] = "Invalid email format.";
     }
 
     // Validē paroli
     if (empty($password)) {
-        $errors[] = "Parole ir nepieciešama un nevar būt tukša.";
+        $errors[] = "Password is required and cannot be empty.";
     } elseif (!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/", $password)) {
-        $errors[] = "Parolē jāietver vismaz 8 simboli, 1 lielais burts, 1 cipars un 1 simbols!";
+        $errors[] = "Your password must include at least 8 characters, one uppercase letter, one number, and one symbol.";
     } elseif ($password !== $confirmpassword) {
-        $errors[] = "Parole jāievada otrreiz!";
+        $errors[] = "Password must be entered twice!";
     }
 
     // Ja nav kļūdu, turpina ar datubāzes operācijām
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
 
         // Pārbauda, vai savienojums izdevās
         if (!$con) {
-            $errors[] = "Neizdevās savienoties ar MySQL: " . mysqli_connect_error();
+            $errors[] = "Couldn't connect to MySQL: " . mysqli_connect_error();
         } else {
             // Pārbauda, vai lietotājvārds jau eksistē
             $stmt = $con->prepare("SELECT * FROM users WHERE username = ?");
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
-                $errors[] = "Lietotājvārds jau eksistē.";
+                $errors[] = "This username is already taken.";
             }
             $stmt->close();
 
@@ -81,11 +81,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
 
     // Pārbauda, vai ir kļūdas pirms pāradresēšanas
     if (empty($errors)) {
-        session_start(); // Sāk sesiju
-        $_SESSION["username"] = $username; // Saglabā lietotājvārdu sesijā
-        $_SESSION["email"] = $email; // Saglabā e-pastu sesijā
+        session_start(); 
+        $_SESSION["username"] = $username;
+        $_SESSION["email"] = $email;
         header("Location: index.php"); // Pāradresē uz profila lapu
-        exit(); // Beidz izpildi
+        exit();
     }
 }
 ?>
@@ -95,33 +95,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reģistrācija</title>
+    <title>Register</title>
+
+    <link rel="stylesheet" href="css/style_register.css">
 </head>
 <body>
 
 
 
 <div class="container">
-    <h2>Reģistrēties</h2> 
+    <h2>Register</h2> 
 
     <div class="topnav">
-        <a href="index.php">Sākums</a>
-        <a href="login.php">Ielogoties</a>
-        <a class="active" href="register.php">Reģistrēties</a>
+        <a href="index.php">Home</a>
+        <a href="login.php">Login</a>
+        <a class="active" href="register.php">Register</a>
     </div>
     
-    <form method="post" action="" novalidate>
-        <input type="text" name="username" placeholder="Lietotājvārds" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required>
-        
-        <input type="email" name="email" placeholder="E-pasts" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
-        
-        <input type="password" name="password" placeholder="Parole" required>
-        
-        <input type="password" name="checkpassword" placeholder="Apstiprināt paroli" required>
-        
-        <input type="submit" value="Reģistrēties">
-  
-    </form>
+
+        <form method="post" action="" novalidate>
+            <input type="text" name="username" placeholder="Username" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required>
+            
+            <input type="email" name="email" placeholder="E-mail" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+            
+            <input type="password" name="password" placeholder="Password" required>
+            
+            <input type="password" name="checkpassword" placeholder="Confirm password" required>
+            
+            <input type="submit" value="Register">
+        </form>
+
 
     <?php if (!empty($errors)): // Pārbauda, vai ir kļūdas ?>
         <div class="error">
@@ -130,9 +133,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+
+     <p> Already have an account? <a href="login.php"> Login</a></p> 
 </div>
 
- <p>Jau ir konts? <a href="login.php">Pieteikties</a></p>
+
 
 </body>
 </html>
